@@ -36,6 +36,7 @@ public class ReportService {
             System.out.println("0 - Sair");
             System.out.println("1 - Buscar funcionário por nome");
             System.out.println("2 - Buscar funcionário por nome, data de contratação e salário maior que...");
+            System.out.println("3 - Buscar funcionário por  data de contratação maior que...");
 
 
             int action = scanner.nextInt();
@@ -49,7 +50,10 @@ public class ReportService {
                     findEmployeeSalaryGreaterDate(scanner);
                     break;
                 }
-
+                case 3: {
+                    findEmployeeHiredAt(scanner);
+                    break;
+                }
                 default: {
                     system = false;
                     break;
@@ -77,6 +81,15 @@ public class ReportService {
         Double salary = scanner.nextDouble();
 
         List<Employee> list = employeeRepository.findNameSalaryGreaterHiredAt(name, salary, localDate);
+        list.forEach(System.out::println);
+    }
+
+    private void findEmployeeHiredAt(Scanner scanner) {
+        System.out.println("Qual data de contratação deseja pesquisar?" );
+        String date = scanner.next();
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        List<Employee> list = employeeRepository.findHiredAtGreater(localDate);
         list.forEach(System.out::println);
     }
 }
