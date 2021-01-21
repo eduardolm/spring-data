@@ -6,6 +6,10 @@ import br.com.alura.springdata.model.WorkUnit;
 import br.com.alura.springdata.repository.EmployeeRepository;
 import br.com.alura.springdata.repository.PositionRepository;
 import br.com.alura.springdata.repository.WorkUnitRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,7 +55,7 @@ public class CrudEmployeeService {
                     break;
                 }
                 case 3: {
-                    view();
+                    view(scanner);
                     break;
                 }
                 case 4: {
@@ -109,8 +113,16 @@ public class CrudEmployeeService {
         System.out.println("Atualizado!");
     }
 
-    private void view() {
-        Iterable<Employee> employees = employeeRepository.findAll();
+    private void view(Scanner scanner) {
+        System.out.println("Qual página você deseja visualizar? ");
+        Integer page = scanner.nextInt() - 1;
+
+        Pageable pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.ASC, "name"));
+        Page<Employee> employees = employeeRepository.findAll(pageable);
+
+        System.out.println(employees);
+        System.out.println("Página atual: " + employees.getNumber() + 1);
+        System.out.println("Total de elementos: " + employees.getTotalElements());
         employees.forEach(System.out::println);
     }
 

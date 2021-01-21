@@ -2,14 +2,14 @@ package br.com.alura.springdata.repository;
 
 import br.com.alura.springdata.model.Employee;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
+public interface EmployeeRepository extends PagingAndSortingRepository<Employee, Integer> {
 
     List<Employee> findByName(String name);
 
