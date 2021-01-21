@@ -1,6 +1,7 @@
 package br.com.alura.springdata.service;
 
 import br.com.alura.springdata.model.Employee;
+import br.com.alura.springdata.model.EmployeeProjection;
 import br.com.alura.springdata.repository.EmployeeRepository;
 import br.com.alura.springdata.repository.PositionRepository;
 import br.com.alura.springdata.repository.WorkUnitRepository;
@@ -37,6 +38,7 @@ public class ReportService {
             System.out.println("1 - Buscar funcionário por nome");
             System.out.println("2 - Buscar funcionário por nome, data de contratação e salário maior que...");
             System.out.println("3 - Buscar funcionário por  data de contratação maior que...");
+            System.out.println("4 - Pesquisar funcionários e salários");
 
 
             int action = scanner.nextInt();
@@ -52,6 +54,10 @@ public class ReportService {
                 }
                 case 3: {
                     findEmployeeHiredAt(scanner);
+                    break;
+                }
+                case 4: {
+                    findByEmployeeSalary();
                     break;
                 }
                 default: {
@@ -91,5 +97,10 @@ public class ReportService {
 
         List<Employee> list = employeeRepository.findHiredAtGreater(localDate);
         list.forEach(System.out::println);
+    }
+
+    private void findByEmployeeSalary() {
+        List<EmployeeProjection> list = employeeRepository.findEmployeeSalary();
+        list.forEach(f -> System.out.println("Funcionário: " + f.getId() + " | nome:" + f.getName() + " | salário: " + f.getSalary()));
     }
 }

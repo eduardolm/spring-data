@@ -1,9 +1,6 @@
 package br.com.alura.springdata;
 
-import br.com.alura.springdata.service.CrudEmployeeService;
-import br.com.alura.springdata.service.CrudPositionService;
-import br.com.alura.springdata.service.CrudWorkUnitService;
-import br.com.alura.springdata.service.ReportService;
+import br.com.alura.springdata.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,17 +18,21 @@ public class SpringDataApplication implements CommandLineRunner {
 
     private final ReportService reportService;
 
+    private final DynamicEmployeeReportService dynamicEmployeeReportService;
+
     private Boolean system = true;
 
     public SpringDataApplication(CrudPositionService positionService,
                                  CrudEmployeeService employeeService,
                                  CrudWorkUnitService workUnitService,
-                                 ReportService reportService) {
+                                 ReportService reportService,
+                                 DynamicEmployeeReportService dynamicEmployeeReportService) {
 
         this.positionService = positionService;
         this.employeeService = employeeService;
         this.workUnitService = workUnitService;
         this.reportService = reportService;
+        this.dynamicEmployeeReportService = dynamicEmployeeReportService;
     }
 
     public static void main(String[] args) {
@@ -49,6 +50,7 @@ public class SpringDataApplication implements CommandLineRunner {
             System.out.println("2 - Unidade de trabalho");
             System.out.println("3 - Funcionário");
             System.out.println("4 - Relatórios");
+            System.out.println("5 - Relatório dinâmico de funcionários");
 
             int action = scanner.nextInt();
 
@@ -67,6 +69,10 @@ public class SpringDataApplication implements CommandLineRunner {
                 }
                 case 4: {
                     reportService.begin(scanner);
+                    break;
+                }
+                case 5: {
+                    dynamicEmployeeReportService.begin(scanner);
                     break;
                 }
                 default: {
